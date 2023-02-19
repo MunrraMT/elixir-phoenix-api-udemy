@@ -21,8 +21,8 @@ defmodule FizzBuzz do
     |> evaluate_numbers()
   end
 
-  defp evaluate_numbers(rem(number, 3) == 0), do: :Fizz
-  defp evaluate_numbers(rem(number, 5) == 0), do: :Buzz
-  defp evaluate_numbers(rem(number, 3) == 0 and rem(number, 5) == 0), do: :FizzBuzz
-  defp evaluate_numbers(rem(number, 3) != 0 and rem(number, 5) != 0), do: :FizzBuzz
+  defp evaluate_numbers(number) when rem(number, 3) == 0 and rem(number, 5) == 0, do: :FizzBuzz
+  defp evaluate_numbers(number) when rem(number, 3) == 0, do: :Fizz
+  defp evaluate_numbers(number) when rem(number, 5) == 0, do: :Buzz
+  defp evaluate_numbers(number), do: number
 end
