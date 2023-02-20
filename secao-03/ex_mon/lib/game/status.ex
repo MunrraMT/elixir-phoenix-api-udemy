@@ -9,4 +9,8 @@ defmodule ExMon.Game.Status do
 
     IO.puts("------------")
   end
+
+  def print_wrong_move_message(move) do
+    IO.puts("\ninvalid move: #{move}!")
+  end
 end
