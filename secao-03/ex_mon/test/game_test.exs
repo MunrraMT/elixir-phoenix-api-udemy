@@ -88,7 +88,7 @@ defmodule ExMon.GameTest do
   end
 
   describe "turn/0" do
-    test "returns turn info", state do
+    test "returns turn info" do
       expected_response = Game.info() |> Map.get(:turn)
 
       assert Game.turn() == expected_response
@@ -96,7 +96,7 @@ defmodule ExMon.GameTest do
   end
 
   describe "fetch_player/0" do
-    test "returns player or computer info", state do
+    test "returns player or computer info" do
       expected_response_player = Game.info() |> Map.get(:player)
       expected_response_computer = Game.info() |> Map.get(:computer)
 
