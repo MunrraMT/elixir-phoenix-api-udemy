@@ -3,8 +3,8 @@ import Config
 # Configure your database
 config :ex_mon, ExMon.Repo,
   username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
+  password: "123",
+  hostname: "127.0.0.1",
   database: "ex_mon_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
