@@ -3,6 +3,7 @@ defmodule ExMon.Trainer do
   import Ecto.Changeset
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @required_params [:name, :password]
 
   schema "trainers" do
     field(:name, :string)
@@ -11,15 +12,13 @@ defmodule ExMon.Trainer do
     timestamps()
   end
 
-  @required_params [:name, :password]
-
   def build(params) do
     params
     |> changeset()
     |> apply_action(:insert)
   end
 
-  def changeset(params) do
+  defp changeset(params) do
     %__MODULE__{}
     |> cast(params, @required_params)
     |> validate_required(@required_params)
