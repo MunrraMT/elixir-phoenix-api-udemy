@@ -27,5 +27,5 @@ defmodule ExMonWeb.TrainersController do
     |> text("")
   end
 
-  defp handle_response({:error, __trainer} = error, __conn, __method), do: error
+  defp handle_response({:error, __reason} = error, __conn, __method), do: error
 end
