@@ -21,6 +21,12 @@ defmodule ExMonWeb.TrainersController do
     |> handle_response(conn, "show.json", :ok)
   end
 
+  def update(conn, params) do
+    params
+    |> ExMon.update_trainer()
+    |> handle_response(conn, "update.json", :ok)
+  end
+
   defp handle_delete({:error, _reason} = error, _conn), do: error
 
   defp handle_delete({:ok, _trainer}, conn) do
