@@ -8,6 +8,11 @@ defmodule ExMonWeb.Router do
   scope "/api", ExMonWeb do
     pipe_through(:api)
     resources("/trainers", TrainersController, only: [:create, :show, :delete, :update])
+
+    resources("/trainer/pokemons", TrainerPokemonsController,
+      only: [:create, :show, :delete, :update]
+    )
+
     get("/pokemons/:name", PokemonsController, :show)
   end
 
