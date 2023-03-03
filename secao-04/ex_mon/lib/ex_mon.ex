@@ -1,6 +1,6 @@
 defmodule ExMon do
   alias ExMon.{Trainer, Pokemon}
-  alias Trainer.Pokemon, as: TrainerPokemon
+  alias ExMon.Trainer.Pokemon, as: TrainerPokemon
 
   defdelegate create_trainer(params), to: Trainer.Create, as: :call
   defdelegate delete_trainer(params), to: Trainer.Delete, as: :call
@@ -10,4 +10,5 @@ defmodule ExMon do
   defdelegate fetch_pokemon(params), to: Pokemon.Get, as: :call
 
   defdelegate create_trainer_pokemon(params), to: TrainerPokemon.Create, as: :call
+  defdelegate delete_trainer_pokemon(params), to: TrainerPokemon.Delete, as: :call
 end
