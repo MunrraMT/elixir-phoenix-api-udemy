@@ -13,6 +13,8 @@ defmodule ExMonWeb.Router do
       only: [:create, :show, :delete, :update]
     )
 
+    post("/trainers/sign_in", TrainersController, :sign_in)
+
     get("/pokemons/:name", PokemonsController, :show)
   end
 

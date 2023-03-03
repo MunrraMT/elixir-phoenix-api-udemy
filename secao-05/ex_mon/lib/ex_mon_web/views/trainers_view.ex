@@ -19,6 +19,10 @@ defmodule ExMonWeb.TrainersView do
     }
   end
 
+  def render("sign_in.json", %{token: token}) do
+    %{token: token}
+  end
+
   def render("show.json", %{
         trainer: %Trainer{
           id: id,
