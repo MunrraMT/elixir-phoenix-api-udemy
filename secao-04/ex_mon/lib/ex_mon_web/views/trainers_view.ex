@@ -2,7 +2,7 @@ defmodule ExMonWeb.TrainersView do
   use ExMonWeb, :view
 
   alias ExMon.Trainer
-  alias ExMon.Trainer.Pokemon
+  alias ExMonWeb.TrainerPokemonsView
 
   def render("create.json", %{trainer: %Trainer{id: id, name: name, inserted_at: inserted_at}}) do
     %{
@@ -27,7 +27,7 @@ defmodule ExMonWeb.TrainersView do
       id: id,
       name: name,
       inserted_at: inserted_at,
-      pokemons: render_many(pokemons, __MODULE__, "trainer_pokemon.json")
+      pokemons: render_many(pokemons, TrainerPokemonsView, "trainer_pokemon.json")
     }
   end
 
@@ -43,11 +43,5 @@ defmodule ExMonWeb.TrainersView do
         updated_at: updated_at
       }
     }
-  end
-
-  def render("trainer_pokemon.json", %{
-        trainers: %Pokemon{id: id, name: name, nickname: nickname, types: types}
-      }) do
-    %{id: id, name: name, nickname: nickname, types: types}
   end
 end
