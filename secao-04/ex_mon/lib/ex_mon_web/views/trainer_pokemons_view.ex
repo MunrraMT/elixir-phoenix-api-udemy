@@ -46,7 +46,7 @@ defmodule ExMonWeb.TrainerPokemonsView do
         inserted_at: inserted_at,
         nickname: nickname,
         types: types,
-        trainer_id: trainer_id,
+        trainer: %{id: trainer_id, name: trainer_name},
         weight: weight
       }
     }

@@ -7,8 +7,8 @@ import Config
 # Run `mix help test` for more information.
 config :ex_mon, ExMon.Repo,
   username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
+  password: "123",
+  hostname: "127.0.0.1",
   database: "ex_mon_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
