@@ -2,11 +2,13 @@ defmodule BananaBankWeb.Router do
   use BananaBankWeb, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/api", BananaBankWeb do
-    pipe_through :api
+    pipe_through(:api)
+
+    get("/", WelcomeController, :index)
   end
 
   # Enable LiveDashboard in development
@@ -19,9 +21,9 @@ defmodule BananaBankWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through([:fetch_session, :protect_from_forgery])
 
-      live_dashboard "/dashboard", metrics: BananaBankWeb.Telemetry
+      live_dashboard("/dashboard", metrics: BananaBankWeb.Telemetry)
     end
   end
 end
