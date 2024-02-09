@@ -11,7 +11,15 @@ defmodule BananaBankWeb.ErrorJSON do
   # the template name. For example, "404.json" becomes
   # "Not Found".
   def render(template, _assigns) do
-    %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
+    %{
+      errors: %{
+        detail: Phoenix.Controller.status_message_from_template(template)
+      }
+    }
+  end
+
+  def error(%{status: :not_found, struct: struct_name}) do
+    %{status: :not_found, message: "#{struct_name} not found"}
   end
 
   def error(%{changeset: changeset}) do
