@@ -1,13 +1,13 @@
 defmodule BananaBankWeb.UsersController do
   use BananaBankWeb, :controller
 
-  alias BananaBank.Users.{User, Create}
   alias BananaBankWeb.FallbackController
+  alias BananaBank.{Users, Users.User}
 
   action_fallback(FallbackController)
 
   def create(conn, params) do
-    with {:ok, %User{} = user} <- Create.call(params) do
+    with {:ok, %User{} = user} <- Users.create(params) do
       conn
       |> put_status(:created)
       |> render(:create, user: user)

@@ -1,6 +1,5 @@
 defmodule BananaBank.Users.Create do
-  alias BananaBank.Users.User
-  alias BananaBank.Repo
+  alias BananaBank.{Repo, Users.User}
 
   def call(params) do
     params
