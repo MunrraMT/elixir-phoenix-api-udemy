@@ -11,12 +11,12 @@ defmodule BananaBankWeb.UsersController do
   defp handle_response({:ok, user}, conn) do
     conn
     |> put_status(:created)
-    |> render("user.json", user: user)
+    |> render(:create, user: user)
   end
 
-  defp handle_response({:error, _changeset} = error, conn) do
-    conn
-    |> put_status(:bad_request)
-    |> render("error.json", error: error)
-  end
+  # defp handle_response({:error, _changeset} = error, conn) do
+  #   conn
+  #   |> put_status(:bad_request)
+  #   |> render("error.json", error: error)
+  # end
 end

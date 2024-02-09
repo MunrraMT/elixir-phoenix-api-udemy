@@ -8,7 +8,7 @@ defmodule BananaBankWeb.Router do
   scope "/api", BananaBankWeb do
     pipe_through(:api)
 
-    resources("/users", WelcomeController, :create, only: [:create, :update, :delete, :show])
+    resources("/users", UsersController, only: [:create, :update, :delete, :show])
   end
 
   # Enable LiveDashboard in development
