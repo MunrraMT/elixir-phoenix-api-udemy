@@ -1,6 +1,7 @@
 defmodule BananaBank.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Ecto.Changeset
 
   @field_required_list [:name, :password, :email, :cep]
 
@@ -18,8 +19,21 @@ defmodule BananaBank.Users.User do
     user
     |> cast(params, @field_required_list)
     |> validate_required(@field_required_list)
+    |> validate_format(:email, ~r/@/)
     |> validate_length(:name, min: 3)
     |> validate_length(:cep, is: 8)
-    |> validate_format(:email, ~r/@/)
+    |> add_password_hash()
   end
+
+  defp add_password_hash(
+         %Changeset{
+           valid?: true,
+           changes: %{password: password}
+         } = changeset
+       ) do
+    changeset
+    |> change(password_hash: Argon2.hash_pwd_salt(password))
+  end
+
+  defp add_password_hash(changeset), do: changeset
 end
