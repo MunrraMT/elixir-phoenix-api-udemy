@@ -7,6 +7,7 @@ defmodule BananaBankWeb.UsersJSON do
   end
 
   def get(%{user: user}), do: %{data: user}
+  def delete(%{user: user}), do: %{data: user}
 
   def update(%{user: user}) do
     %{
