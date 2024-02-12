@@ -17,7 +17,7 @@ defmodule BananaBank.ViaCep.Client do
   end
 
   defp handle_response({:ok, %Tesla.Env{status: 200, body: %{"erro" => true}}}) do
-    {:error, :not_found}
+    {:error, :resource_not_found, "cep não encontrado"}
   end
 
   defp handle_response({:ok, %Tesla.Env{status: 200, body: body}}) do

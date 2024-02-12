@@ -18,8 +18,16 @@ defmodule BananaBankWeb.ErrorJSON do
     }
   end
 
+  def error(%{status: :bad_request}) do
+    %{status: :bad_request}
+  end
+
   def error(%{status: :not_found, struct: struct_name}) do
     %{status: :not_found, message: "#{struct_name} not found"}
+  end
+
+  def error(%{status: :resource_not_found, message: message}) do
+    %{status: :resource_not_found, message: message}
   end
 
   def error(%{changeset: changeset}) do

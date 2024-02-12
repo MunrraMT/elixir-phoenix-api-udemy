@@ -1,9 +1,13 @@
 defmodule BananaBank.Users.Create do
-  alias BananaBank.{Repo, Users.User}
+  alias BananaBank.ViaCep.Client
+  alias BananaBank.Users.User
+  alias BananaBank.Repo
 
-  def call(params) do
-    params
-    |> User.changeset()
-    |> Repo.insert()
+  def call(%{"cep" => cep} = params) do
+    with {:ok, _result} <- Client.call(cep) do
+      params
+      |> User.changeset()
+      |> Repo.insert()
+    end
   end
 end
