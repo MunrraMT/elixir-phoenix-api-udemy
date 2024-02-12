@@ -1,4 +1,5 @@
 defmodule BananaBankWeb.UsersControllerTest do
+  alias BananaBank.Users
   use BananaBankWeb.ConnCase, async: true
 
   @create_attrs %{
@@ -8,8 +9,15 @@ defmodule BananaBankWeb.UsersControllerTest do
     password: "123456"
   }
 
+  @invalid_attrs %{
+    name: "Jo",
+    cep: "123",
+    email: "teste",
+    password: "123"
+  }
+
   describe "create/2" do
-    test "successfully creates an user", %{conn: conn} do
+    test "returns success, if correct params", %{conn: conn} do
       conn = post(conn, ~p"/api/users", @create_attrs)
 
       assert %{
@@ -21,6 +29,45 @@ defmodule BananaBankWeb.UsersControllerTest do
                },
                "message" => "User criado com sucesso!"
              } = json_response(conn, :created)
+    end
+
+    test "returns erros, if empty params", %{conn: conn} do
+      conn = post(conn, ~p"/api/users", %{})
+
+      assert %{
+               "errors" => %{
+                 "cep" => ["can't be blank"],
+                 "email" => ["can't be blank"],
+                 "name" => ["can't be blank"],
+                 "password" => ["can't be blank"]
+               }
+             } = json_response(conn, :bad_request)
+    end
+
+    test "returns success, if invalid params", %{conn: conn} do
+      conn = post(conn, ~p"/api/users", @invalid_attrs)
+
+      assert %{
+               "errors" => %{
+                 "cep" => ["should be 8 character(s)"],
+                 "email" => ["has invalid format"],
+                 "name" => ["should be at least 3 character(s)"],
+                 "password" => ["should be at least 6 character(s)"]
+               }
+             } = json_response(conn, :bad_request)
+    end
+  end
+
+  describe "delete/1" do
+    test "returns success, if valid id", %{conn: conn} do
+      {:ok, %{id: id} = _user} = Users.create(@create_attrs)
+
+      conn = delete(conn, ~p"/api/users/#{id}")
+      %{"data" => %{"id" => id_response}} = json_response(conn, :ok)
+      assert to_string(id) == id_response
+
+      conn = get(conn, ~p"/api/users/#{id}")
+      assert json_response(conn, :not_found)
     end
   end
 end
