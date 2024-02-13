@@ -4,7 +4,7 @@ defmodule BananaBankWeb.UsersControllerTest do
 
   @create_attrs %{
     name: "João",
-    cep: "12345678",
+    cep: "01001000",
     email: "teste@teste.com",
     password: "123456"
   }
@@ -24,27 +24,27 @@ defmodule BananaBankWeb.UsersControllerTest do
                "data" => %{
                  "id" => _id,
                  "name" => "João",
-                 "cep" => "12345678",
+                 "cep" => "01001000",
                  "email" => "teste@teste.com"
                },
                "message" => "User criado com sucesso!"
              } = json_response(conn, :created)
     end
 
-    test "returns erros, if empty params", %{conn: conn} do
+    test "returns errors, if empty params", %{conn: conn} do
       conn = post(conn, ~p"/api/users", %{})
 
       assert %{
                "errors" => %{
-                 "cep" => ["can't be blank"],
-                 "email" => ["can't be blank"],
-                 "name" => ["can't be blank"],
-                 "password" => ["can't be blank"]
+                 "cep" => ["should be 8 character(s)"],
+                 "email" => ["has invalid format"],
+                 "name" => ["should be at least 3 character(s)"],
+                 "password" => ["should be at least 6 character(s)"]
                }
              } = json_response(conn, :bad_request)
     end
 
-    test "returns success, if invalid params", %{conn: conn} do
+    test "returns errors, if invalid params", %{conn: conn} do
       conn = post(conn, ~p"/api/users", @invalid_attrs)
 
       assert %{
