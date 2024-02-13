@@ -7,7 +7,7 @@ defmodule BananaBank.ViaCep.ClientTest do
     {:ok, bypass: bypass}
   end
 
-  defp endpoint_url(port), do: "http://localhost:#{port}/"
+  defp endpoint_url(port), do: "http://localhost:#{port}"
 
   describe "call/1" do
     test "returns cep info if valid cep", %{bypass: bypass} do
@@ -25,12 +25,9 @@ defmodule BananaBank.ViaCep.ClientTest do
           "uf": "SP"
           }>
 
-      Bypass.expect(bypass, fn conn ->
-        Plug.Conn.resp(
-          conn,
-          200,
-          expected_response
-        )
+      Bypass.expect(bypass, "GET", "01001000/json/", fn conn ->
+        conn
+        |> Plug.Conn.resp(200, expected_response)
       end)
 
       response =
