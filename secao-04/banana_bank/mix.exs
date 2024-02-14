@@ -44,7 +44,8 @@ defmodule BananaBank.MixProject do
       {:bandit, "~> 1.2"},
       {:argon2_elixir, "~> 4.0"},
       {:tesla, "~> 1.8"},
-      {:bypass, "~> 2.1", only: :test}
+      {:bypass, "~> 2.1", only: :test},
+      {:mox, "~> 1.1", only: :test}
     ]
   end
 
