@@ -1,6 +1,10 @@
 defmodule BananaBankWeb.UsersControllerTest do
-  alias BananaBank.Users
   use BananaBankWeb.ConnCase, async: true
+  alias BananaBank.Users
+  alias BananaBank.ViaCep.ClientMock, as: ViaCepClientMock
+  import Mox
+
+  setup :verify_on_exit!
 
   @valid_attrs %{
     "name" => "João",
@@ -25,6 +29,7 @@ defmodule BananaBankWeb.UsersControllerTest do
 
   describe "create/2" do
     test "returns success, if correct params", %{conn: conn} do
+      expect(ViaCepClientMock, :call, fn _cep -> {:ok, %{}} end)
       conn = post(conn, ~p"/api/users", @valid_attrs)
 
       assert %{
@@ -39,18 +44,24 @@ defmodule BananaBankWeb.UsersControllerTest do
     end
 
     test "returns errors, if empty cep", %{conn: conn} do
+      expect(ViaCepClientMock, :call, fn _cep -> {:error, :bad_request} end)
       conn = post(conn, ~p"/api/users", @valid_attrs_with_empty_cep)
 
       assert %{"status" => "bad_request"} = json_response(conn, :bad_request)
     end
 
     test "returns errors, if invalid cep", %{conn: conn} do
+      expect(ViaCepClientMock, :call, fn _cep ->
+        {:error, :resource_not_found, "cep não encontrado"}
+      end)
+
       conn = post(conn, ~p"/api/users", @valid_attrs_except_cep)
 
       assert %{"status" => "resource_not_found"} = json_response(conn, :ok)
     end
 
     test "returns errors, if empty params, except cep", %{conn: conn} do
+      expect(ViaCepClientMock, :call, fn _cep -> {:ok, %{}} end)
       conn = post(conn, ~p"/api/users", %{"cep" => @valid_cep})
 
       assert %{
@@ -63,6 +74,7 @@ defmodule BananaBankWeb.UsersControllerTest do
     end
 
     test "returns errors, if invalid params, except cep", %{conn: conn} do
+      expect(ViaCepClientMock, :call, fn _cep -> {:ok, %{}} end)
       conn = post(conn, ~p"/api/users", @invalid_attrs_except_cep)
 
       assert %{
@@ -77,6 +89,7 @@ defmodule BananaBankWeb.UsersControllerTest do
 
   describe "delete/1" do
     test "returns success, if valid id", %{conn: conn} do
+      expect(ViaCepClientMock, :call, fn _cep -> {:ok, %{}} end)
       {:ok, %{id: id} = _user} = Users.create(@valid_attrs)
 
       conn = delete(conn, ~p"/api/users/#{id}")

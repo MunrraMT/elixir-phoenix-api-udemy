@@ -1,11 +1,11 @@
-Mox.defmock(BananaBank.ViaCep.ClientBehaviourMock,
+Mox.defmock(BananaBank.ViaCep.ClientMock,
   for: BananaBank.ViaCep.ClientBehaviour
 )
 
 Application.put_env(
   :banana_bank,
   :via_cep_client,
-  BananaBank.ViaCep.ClientBehaviourMock
+  BananaBank.ViaCep.ClientMock
 )
 
 ExUnit.start()
