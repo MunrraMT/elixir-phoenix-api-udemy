@@ -8,8 +8,6 @@ defmodule BananaBank.Users.User do
   @param_list [:name, :password, :email, :cep]
   @param_list_update [:name, :email, :cep]
 
-  @derive {Jason.Encoder, except: [:__meta__, :password, :password_hash]}
-
   schema "users" do
     field(:name, :string)
     field(:password, :string, virtual: true)
