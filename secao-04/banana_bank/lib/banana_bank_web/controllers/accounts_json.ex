@@ -8,6 +8,22 @@ defmodule BananaBankWeb.AccountsJSON do
     }
   end
 
+  def transaction(%{
+        transaction:
+          %{
+            deposit: to_account,
+            withdraw: from_account
+          } = _transaction
+      }) do
+    %{
+      message: "Transferência realizada com sucesso!",
+      data: %{
+        deposit: data(to_account),
+        withdraw: data(from_account)
+      }
+    }
+  end
+
   defp data(%Account{} = account) do
     %{
       id: account.id,

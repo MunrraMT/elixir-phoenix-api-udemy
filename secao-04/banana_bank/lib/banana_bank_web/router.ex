@@ -13,6 +13,7 @@ defmodule BananaBankWeb.Router do
     )
 
     post "/accounts", AccountsController, :create
+    post "/accounts/transaction", AccountsController, :transaction
   end
 
   # Enable LiveDashboard in development

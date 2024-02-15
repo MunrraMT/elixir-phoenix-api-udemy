@@ -31,4 +31,11 @@ defmodule BananaBankWeb.FallbackController do
     |> put_view(json: ErrorJSON)
     |> render(:error, changeset: changeset)
   end
+
+  def call(conn, {:error, message}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(json: ErrorJSON)
+    |> render(:error, message: message)
+  end
 end
