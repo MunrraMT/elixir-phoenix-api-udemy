@@ -2,19 +2,19 @@ defmodule BananaBank.Users.Verify do
   alias BananaBank.Users.User
   alias BananaBank.Users
 
-  def call(%{user_id: user_id, password: password}) do
+  def call(user_id, password) do
     case Users.get(user_id) do
-      {:ok, %User{password_hash: password_hash} = _user} ->
-        verify(password, password_hash)
+      {:ok, %User{} = user} ->
+        verify(password, user)
 
       error ->
         error
     end
   end
 
-  defp verify(password, password_hash) do
-    case Argon2.verify_pass(password, password_hash) do
-      true -> {:ok, :valid_password}
+  defp verify(password, %User{} = user) do
+    case Argon2.verify_pass(password, user.password_hash) do
+      true -> {:ok, user}
       false -> {:error, :unauthorized}
     end
   end
