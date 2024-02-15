@@ -22,6 +22,10 @@ defmodule BananaBankWeb.ErrorJSON do
     %{status: :bad_request}
   end
 
+  def error(%{status: :unauthorized}) do
+    %{status: :unauthorized}
+  end
+
   def error(%{status: :not_found, struct: struct_name}) do
     %{status: :not_found, message: "#{struct_name} not found"}
   end

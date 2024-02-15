@@ -1,18 +1,29 @@
 defmodule BananaBankWeb.Router do
   use BananaBankWeb, :router
+  alias BananaBankWeb.Plugs
 
   pipeline :api do
     plug(:accepts, ["json"])
   end
 
-  scope "/api", BananaBankWeb do
-    pipe_through(:api)
+  pipeline :auth do
+    plug Plugs.Auth
+  end
 
-    resources("/users", UsersController,
-      only: [:create, :update, :delete, :show]
-    )
+  scope "/api", BananaBankWeb do
+    pipe_through([:api])
+
+    get "/", WelcomeController, :index
+
+    resources("/users", UsersController, only: [:create])
 
     post "/users/login", UsersController, :login
+  end
+
+  scope "/api", BananaBankWeb do
+    pipe_through([:api, :auth])
+
+    resources("/users", UsersController, only: [:update, :delete, :show])
 
     post "/accounts", AccountsController, :create
     post "/accounts/transaction", AccountsController, :transaction
