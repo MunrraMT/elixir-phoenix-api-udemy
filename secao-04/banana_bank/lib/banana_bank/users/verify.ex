@@ -2,7 +2,7 @@ defmodule BananaBank.Users.Verify do
   alias BananaBank.Users.User
   alias BananaBank.Users
 
-  def call(%{"user_id" => user_id, "password" => password}) do
+  def call(%{user_id: user_id, password: password}) do
     case Users.get(user_id) do
       {:ok, %User{password_hash: password_hash} = _user} ->
         verify(password, password_hash)
